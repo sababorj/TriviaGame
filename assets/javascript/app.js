@@ -27,7 +27,7 @@ var itemArray = [
     {
         question: "What is the meaning of the word Iran?",
         answersOptions: ["Land of the persians", "Land of the Aryans", "Land of the God", "Land of brave men"],
-        correctAnswer: "Zoroastrianism",
+        correctAnswer: "Land of the Aryans",
         picture: "assets/images/iran.png"
     },
     {
