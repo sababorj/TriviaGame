@@ -59,6 +59,7 @@ $("#startButton").on("click", function () {
 // main game function
 function game(questionNumber) {
     //set and present a timer
+    $(".timer").empty();
     var timeLeft = 5;
     $(".timer").append(`<h3 id="time">Time Remaining: ${timeLeft} Seconds</h3>`);
     var timerid = setInterval(function () {
@@ -76,10 +77,10 @@ function game(questionNumber) {
     }
 
     // handeling user's answers
-    $(".answerButton").on("click",function(){
+    $(".answerButton").on("click", function () {
         var j = parseInt($(this).val());
         chosenanswer = itemArray[questionNumber].answersOptions[j];
-        timeForResult(chosenanswer,questionNumber)
+        timeForResult(chosenanswer, questionNumber)
     })
 
 
@@ -92,27 +93,68 @@ function game(questionNumber) {
         if (!answer) {
             unAnswered++;
             $(".item").append(`<h3> Out of Time </h3>`);
-            $(".item").append(`<h2> The correct answer was: ${itemArray[questionNumber].correctAnswer} </h3>`); 
-        } 
+            $(".item").append(`<h2> The correct answer was: ${itemArray[questionNumber].correctAnswer} </h2>`);
+        }
         // correct answer result 
         else if (answer === itemArray[questionNumber].correctAnswer) {
             $(".item").append(`<h3> Correct! </h3>`);
             correct++;
 
-        } 
+        }
         // wrong answer result
         else {
             incorrect++
             $(".item").append(`<h3> Nope! </h3>`);
-            $(".item").append(`<h2> The correct answer was: ${itemArray[questionNumber].correctAnswer} </h3>`);
+            $(".item").append(`<h2> The correct answer was: ${itemArray[questionNumber].correctAnswer} </h2>`);
         }
         $(".item").append(`<img src="${itemArray[questionNumber].picture}">`);
+        questionNumber = questionNumber+1;
+        setTimeout(function(){ 
+            if (questionNumber === (itemArray.length - 1)) {
+                finalResult();
+            } else{
+                $(".item").empty();
+                $(".time").empty();
+                game(questionNumber);
+                }
+         }, 1000);
     }
 
 }
 
 
-// final result 
 
+
+// moving to next question or final result
+// function nextstep(questionNumber) {
+//     if (questionNumber === (itemArray.length - 1)) {
+//         finalResult();
+//     } else {
+//         $(".item").empty();
+//         $(".time").empty();
+//         game(questionNumber);
+//     }
+// }
+
+// final result 
+function finalResult() {
+    $(".item").empty();
+    $(".item").append(`<h3> All Done! Here is how you did </h3>`);
+    $(".item").append(`<h2> Correct Answers: ${correct} </h2>`);
+    $(".item").append(`<h2> Incorrect Answers: ${incorrect} </h2>`);
+    $(".item").append(`<h2> Unanswerred: ${unAnswered} </h2>`);
+    $(".item").append(`<button type="button" id="reset"> Start Over? </button>`);
+}
+
+$("#reset").on("click", function(){console.log("!!!")});
 
 // restart the game
+function restart(){
+    $(".item").empty();
+    $(".time").empty();
+    correct = 0;
+    incorrect = 0;
+    unAnswered = 0;
+    questionNumber = 0;
+    $("#start").show();
+}

@@ -56,7 +56,22 @@ img{
 
 h2{
     margin: auto;
+    margin-top: 10px;
     width: 40%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 20px;
+
+}
+
+#reset{
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 35px;
+    border-radius: 8px;
+    font-weight: bolder;
+    width: 40%;
+    height: 60px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: lightsalmon;
 }
