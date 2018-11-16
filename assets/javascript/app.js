@@ -60,7 +60,7 @@ $("#startButton").on("click", function () {
 function game(questionNumber) {
     //set and present a timer
     $(".timer").empty();
-    var timeLeft = 5;
+    var timeLeft = 10;
     $(".timer").append(`<h3 id="time">Time Remaining: ${timeLeft} Seconds</h3>`);
     var timerid = setInterval(function () {
         timeLeft--;
@@ -117,7 +117,7 @@ function game(questionNumber) {
                 $(".time").empty();
                 game(questionNumber);
                 }
-         }, 1000);
+         }, 2000);
     }
 
 }
@@ -136,7 +136,7 @@ function game(questionNumber) {
 //     }
 // }
 
-// final result 
+// final result show 
 function finalResult() {
     $(".item").empty();
     $(".item").append(`<h3> All Done! Here is how you did </h3>`);
@@ -144,14 +144,15 @@ function finalResult() {
     $(".item").append(`<h2> Incorrect Answers: ${incorrect} </h2>`);
     $(".item").append(`<h2> Unanswerred: ${unAnswered} </h2>`);
     $(".item").append(`<button type="button" id="reset"> Start Over? </button>`);
+    $("#reset").on("click", restart)
 }
 
-$("#reset").on("click", function(){console.log("!!!")});
+
 
 // restart the game
 function restart(){
     $(".item").empty();
-    $(".time").empty();
+    $(".timer").empty();
     correct = 0;
     incorrect = 0;
     unAnswered = 0;
