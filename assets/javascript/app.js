@@ -119,7 +119,7 @@ function game(questionNumber) {
 
 // moving to next question or final result
 function nextstep(questionNumber) {
-    if (questionNumber === (itemArray.length - 1)) {
+    if (questionNumber === (itemArray.length)) {
         finalResult();
     } else {
         $(".item").empty();
