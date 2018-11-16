@@ -1,4 +1,4 @@
-// Declare an array to store item Objects, each object has question, answersOptions, correctAnswer, and a picture
+// Declare an array to store item objects, each item object has question, answersOptions, correctAnswer, and a picture
 var itemArray = [
     {
         question: "What is the official language of Iran?",
@@ -58,19 +58,22 @@ $("#startButton").on("click", function () {
 
 // main game function
 function game(questionNumber) {
-    //set and present a timer
+
+    // present a timer in the page 
     $(".timer").empty();
     var timeLeft = 10;
     $(".timer").append(`<h3 id="time">Time Remaining: ${timeLeft} Seconds</h3>`);
-    var timerid = setInterval(function () {
+    // run the timer 
+    var timerid = setInterval(decrease, 1000);
+    function decrease() {
         timeLeft--;
         $("#time").text(`Time Remaining: ${timeLeft} Seconds`);
         if (timeLeft === 0) {
             timeForResult(false, questionNumber);
         }
-    }, 1000);
+    }
 
-    // present items
+    // present the item 
     $(".item").append(`<h3 id="question">${itemArray[questionNumber].question}</h3>`);
     for (var i = 0; i < 4; i++) {
         $(".item").append(`<button class="answerButton" value="${i}" >${itemArray[questionNumber].answersOptions[i]}</button>`);
@@ -83,13 +86,12 @@ function game(questionNumber) {
         timeForResult(chosenanswer, questionNumber)
     })
 
-
-
-    // result part
+    // result for each question
     function timeForResult(answer, questionNumber) {
         clearInterval(timerid);
         $(".item").empty();
-        // time out result
+
+        // time out unanswered result
         if (!answer) {
             unAnswered++;
             $(".item").append(`<h3> Out of Time </h3>`);
@@ -99,44 +101,34 @@ function game(questionNumber) {
         else if (answer === itemArray[questionNumber].correctAnswer) {
             $(".item").append(`<h3> Correct! </h3>`);
             correct++;
-
         }
-        // wrong answer result
+        // incorrect answer result
         else {
             incorrect++
             $(".item").append(`<h3> Nope! </h3>`);
             $(".item").append(`<h2> The correct answer was: ${itemArray[questionNumber].correctAnswer} </h2>`);
         }
         $(".item").append(`<img src="${itemArray[questionNumber].picture}">`);
-        questionNumber = questionNumber+1;
-        setTimeout(function(){ 
-            if (questionNumber === (itemArray.length - 1)) {
-                finalResult();
-            } else{
-                $(".item").empty();
-                $(".time").empty();
-                game(questionNumber);
-                }
-         }, 2000);
-    }
 
+        // moving on to the next step (either next question or final result page)
+        questionNumber = questionNumber + 1;
+        setTimeout(function (){nextstep(questionNumber)}, 2000);
+    }
 }
 
 
-
-
 // moving to next question or final result
-// function nextstep(questionNumber) {
-//     if (questionNumber === (itemArray.length - 1)) {
-//         finalResult();
-//     } else {
-//         $(".item").empty();
-//         $(".time").empty();
-//         game(questionNumber);
-//     }
-// }
+function nextstep(questionNumber) {
+    if (questionNumber === (itemArray.length - 1)) {
+        finalResult();
+    } else {
+        $(".item").empty();
+        $(".time").empty();
+        game(questionNumber);
+    }
+}
 
-// final result show 
+// final result page 
 function finalResult() {
     $(".item").empty();
     $(".item").append(`<h3> All Done! Here is how you did </h3>`);
@@ -147,10 +139,8 @@ function finalResult() {
     $("#reset").on("click", restart)
 }
 
-
-
 // restart the game
-function restart(){
+function restart() {
     $(".item").empty();
     $(".timer").empty();
     correct = 0;
